@@ -58,20 +58,89 @@ COMMANDS 					*neoinclude-commands*
 ------------------------------------------------------------------------------
 VARIABLES 					*neoinclude-variables*
 
-g:neoinclude#ctags_command		*g:neoinclude#ctags_command*
+g:neoinclude#ctags_command			*g:neoinclude#ctags_command*
 		It is the path to the ctags command.
 		Note: If this command is not installed, include source is
 		disabled.
 
 		Default value is "ctags".
 
-					*g:neoinclude#ctags_arguments*
-g:neoinclude#ctags_arguments
+g:neoinclude#ctags_arguments			*g:neoinclude#ctags_arguments*
 		It is the dictionary of the character string to set a value
 		to give as an argument of the commands when buffer
 		and include use a ctags command.  The dictionary's
 		key is filetype.  If the key is "_", it will be used for
 		default.
+
+g:neoinclude#max_processes			*g:neoinclude#max_processes*
+		This variable appoints the max number of include processes.
+		When this variable is 0, include process will be disabled.
+
+		Default value is 20.
+
+g:neoinclude#paths				*g:neoinclude#paths*
+		It is the variable to enumerate path of the include file
+		every file type.  When there is not it, 'path' is used.
+		Refer to 'path' for the description form.  It is the
+		dictionary of the character string that assumed file type a
+		key.
+
+g:neoinclude#patterns				*g:neoinclude#patterns*
+		This variable appoints the pattern of the include command.
+		When there is not it, 'include' is used.  Refer to 'include'
+		for the description form.  It is the dictionary of the
+		character string that assumed file type a key.
+
+g:neoinclude#exprs				*g:neoinclude#exprs*
+		It is the expression string of the line analysis to perform
+		to acquire an include file name.  When there is not it,
+		'includeexpr' is used.  Refer to 'includeexpr' for the
+		description form.  It is the dictionary of the character
+		string that assumed file type a key.
+
+g:neoinclude#reverse_exprs			*g:neoinclude#reverse_exprs*
+		It is the expression string of the line analysis to perform
+		to substitute an include file name.  When there is not it,
+		ignored.  Refer to 'includeexpr' for the
+		description form.  It is the dictionary of the character
+		string that assumed file type a key.
+
+		Example: Perl
+>
+		if !exists('g:neoinclude#exprs')
+		  let g:neoinclude#exprs = {}
+		endif
+		let g:neoinclude#exprs.perl =
+		\ 'fnamemodify(substitute(v:fname, "/", "::", "g"), ":r")'
+<
+g:neoinclude#exts				*g:neoinclude#exts*
+		It is the list of include file name extensions.  When there
+		is not it, all file name is used.  It is the dictionary of
+		the list that assumed file type a key.  In order to use this
+		feature you have to initialize 'g:neoinclude#exts' as shown in
+		the following example.
+
+		Example: C++
+>
+		if !exists('g:neoinclude#exts')
+		  let g:neoinclude#exts = {}
+		endif
+		let g:neoinclude#exts.cpp = ['', 'h', 'hpp', 'hxx']
+<
+g:neoinclude#delimiters				*g:neoinclude#delimiters*
+		It is the delimiter character of include path.  When there is
+		not it, "." is used.  It is the dictionary of the string that
+		assumed file type a key.
+
+g:neoinclude#functions				*g:neoinclude#functions*
+		This variable appoints the function name of the include
+		command.  When there is not it, ignored.  It is the dictionary
+		of the function name string that assumed file type a key.
+
+		The function args are {lines} and {path}.
+		{lines} is the list of buffer lines.
+		{path} is the include path.
+		The return value is the list of include files.
 
 ------------------------------------------------------------------------------
 FUNCTIONS 					*neoinclude-functions*
