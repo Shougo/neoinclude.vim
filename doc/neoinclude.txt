@@ -1,4 +1,4 @@
-*neoinclude.txt*	Include completion framework for neoinclude/deoplete.
+*neoinclude.txt*	Include completion framework for neocomplete/deoplete.
 
 Version: 0.1
 Author: Shougo <Shougo.Matsu at gmail.com>
