@@ -63,6 +63,12 @@ COMMANDS 					*neoinclude-commands*
 ------------------------------------------------------------------------------
 VARIABLES 					*neoinclude-variables*
 
+g:neoinclude#max_processes			*g:neoinclude#max_processes*
+		This variable appoints the max number of include processes.
+		When this variable is 0, include process will be disabled.
+
+		Default value is 20.
+
 g:neoinclude#ctags_command			*g:neoinclude#ctags_command*
 		It is the path to the ctags command.
 		Note: If this command is not installed, include source is
@@ -77,11 +83,11 @@ g:neoinclude#ctags_arguments			*g:neoinclude#ctags_arguments*
 		key is filetype.  If the key is "_", it will be used for
 		default.
 
-g:neoinclude#max_processes			*g:neoinclude#max_processes*
-		This variable appoints the max number of include processes.
-		When this variable is 0, include process will be disabled.
+		Default value is in "g:neoinclude#_ctags_arguments".
 
-		Default value is 20.
+						*b:neoinclude_ctags_arguments*
+b:neoinclude_ctags_arguments
+		Buffer local variable of |g:neoinclude#_ctags_arguments|.
 
 g:neoinclude#paths				*g:neoinclude#paths*
 		It is the variable to enumerate path of the include file
@@ -90,11 +96,23 @@ g:neoinclude#paths				*g:neoinclude#paths*
 		dictionary of the character string that assumed file type a
 		key.
 
+		Default value is in "g:neoinclude#_paths".
+
+						*b:neoinclude_paths*
+b:neoinclude_paths
+		Buffer local variable of |g:neoinclude#_paths|.
+
 g:neoinclude#patterns				*g:neoinclude#patterns*
 		This variable appoints the pattern of the include command.
 		When there is not it, 'include' is used.  Refer to 'include'
 		for the description form.  It is the dictionary of the
 		character string that assumed file type a key.
+
+		Default value is in "g:neoinclude#_patterns".
+
+						*b:neoinclude_patterns*
+b:neoinclude_patterns
+		Buffer local variable of |g:neoinclude#_patterns|.
 
 g:neoinclude#exprs				*g:neoinclude#exprs*
 		It is the expression string of the line analysis to perform
@@ -102,6 +120,12 @@ g:neoinclude#exprs				*g:neoinclude#exprs*
 		'includeexpr' is used.  Refer to 'includeexpr' for the
 		description form.  It is the dictionary of the character
 		string that assumed file type a key.
+
+		Default value is in "g:neoinclude#_exprs".
+
+						*b:neoinclude_exprs*
+b:neoinclude_exprs
+		Buffer local variable of |g:neoinclude#_exprs|.
 
 g:neoinclude#reverse_exprs			*g:neoinclude#reverse_exprs*
 		It is the expression string of the line analysis to perform
@@ -118,6 +142,12 @@ g:neoinclude#reverse_exprs			*g:neoinclude#reverse_exprs*
 		let g:neoinclude#reverse_exprs.perl =
 		\ 'fnamemodify(substitute(v:fname, "/", "::", "g"), ":r")'
 <
+		Default value is in "g:neoinclude#_reverse_exprs".
+
+						*b:neoinclude_reverse_exprs*
+b:neoinclude_reverse_exprs
+		Buffer local variable of |g:neoinclude#_reverse_exprs|.
+
 g:neoinclude#exts				*g:neoinclude#exts*
 		It is the list of include file name extensions.  When there
 		is not it, all file name is used.  It is the dictionary of
@@ -132,10 +162,22 @@ g:neoinclude#exts				*g:neoinclude#exts*
 		endif
 		let g:neoinclude#exts.cpp = ['', 'h', 'hpp', 'hxx']
 <
+		Default value is in "g:neoinclude#_exts".
+
+						*b:neoinclude_exts*
+b:neoinclude_exts
+		Buffer local variable of |g:neoinclude#_exts|.
+
 g:neoinclude#delimiters				*g:neoinclude#delimiters*
 		It is the delimiter character of include path.  When there is
 		not it, "." is used.  It is the dictionary of the string that
 		assumed file type a key.
+
+		Default value is in "g:neoinclude#_delimiters".
+
+						*b:neoinclude_delimiters*
+b:neoinclude_delimiters
+		Buffer local variable of |g:neoinclude#_delimiters|.
 
 g:neoinclude#functions				*g:neoinclude#functions*
 		This variable appoints the function name of the include
@@ -146,6 +188,12 @@ g:neoinclude#functions				*g:neoinclude#functions*
 		{lines} is the list of buffer lines.
 		{path} is the include path.
 		The return value is the list of include files.
+
+		Default value is in "g:neoinclude#_functions".
+
+						*b:neoinclude_functions*
+b:neoinclude_functions
+		Buffer local variable of |g:neoinclude#_functions|.
 
 ------------------------------------------------------------------------------
 FUNCTIONS 					*neoinclude-functions*

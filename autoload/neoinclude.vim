@@ -37,108 +37,117 @@ function! neoinclude#initialize() abort "{{{
       \ get(g:, 'neoinclude#ctags_command', 'ctags')
   let g:neoinclude#ctags_arguments =
       \ get(g:, 'neoinclude#ctags_arguments', {})
+  let g:neoinclude#_ctags_arguments = {}
   let g:neoinclude#max_processes =
         \ get(g:, 'neoinclude#max_processes', 20)
-  let g:neoinclude#exts =
-        \ get(g:, 'neoinclude#exts', {})
-  let g:neoinclude#delimiters =
-        \ get(g:, 'neoinclude#delimiters', {})
-  let g:neoinclude#patterns =
-        \ get(g:, 'neoinclude#patterns', {})
-  let g:neoinclude#exprs =
-        \ get(g:, 'neoinclude#exprs', {})
   let g:neoinclude#paths =
         \ get(g:, 'neoinclude#paths', {})
-  let g:neoinclude#suffixes =
-        \ get(g:, 'neoinclude#suffixes', {})
-  let g:neoinclude#functions =
-        \ get(g:, 'neoinclude#functions', {})
+  let g:neoinclude#_paths = {}
+  let g:neoinclude#patterns =
+        \ get(g:, 'neoinclude#patterns', {})
+  let g:neoinclude#_patterns = {}
+  let g:neoinclude#exprs =
+        \ get(g:, 'neoinclude#exprs', {})
+  let g:neoinclude#_exprs = {}
+  let g:neoinclude#exts =
+        \ get(g:, 'neoinclude#exts', {})
+  let g:neoinclude#_exts = {}
   let g:neoinclude#reverse_exprs =
         \ get(g:, 'neoinclude#reverse_exprs', {})
+  let g:neoinclude#_reverse_exprs = {}
+  let g:neoinclude#functions =
+        \ get(g:, 'neoinclude#functions', {})
+  let g:neoinclude#_functions = {}
+  let g:neoinclude#delimiters =
+        \ get(g:, 'neoinclude#delimiters', {})
+  let g:neoinclude#_delimiters = {}
+  let g:neoinclude#suffixes =
+        \ get(g:, 'neoinclude#suffixes', {})
+  let g:neoinclude#_suffixes = {}
 
   " Initialize include pattern. "{{{
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#patterns',
+        \ 'g:neoinclude#_patterns',
         \ 'java,haskell', '^\s*\<import')
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#patterns',
+        \ 'g:neoinclude#_patterns',
         \ 'c,cpp', '^\s*#\s*include')
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#patterns',
+        \ 'g:neoinclude#_patterns',
         \ 'cs', '^\s*\<using')
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#patterns',
+        \ 'g:neoinclude#_patterns',
         \ 'ruby', '^\s*\<\%(load\|require\|require_relative\)\>')
   "}}}
   " Initialize include suffixes. "{{{
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#suffixes',
+        \ 'g:neoinclude#_suffixes',
         \ 'haskell', '.hs')
   "}}}
   " Initialize include functions. "{{{
   " call neoinclude#util#set_default_dictionary(
-  "       \ 'g:neoinclude#functions', 'vim',
+  "       \ 'g:neoinclude#_functions', 'vim',
   "       \ 'neoinclude#analyze_vim_include_files')
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#functions', 'ruby',
+        \ 'g:neoinclude#_functions', 'ruby',
         \ 'neoinclude#analyze_ruby_include_files')
   "}}}
   " Initialize filename include expr. "{{{
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#reverse_exprs',
+        \ 'g:neoinclude#_reverse_exprs',
         \ 'perl',
         \ 'substitute(v:fname, "/", "::", "g")')
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#reverse_exprs',
+        \ 'g:neoinclude#_reverse_exprs',
         \ 'java,d',
         \ 'substitute(v:fname, "/", ".", "g")')
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#reverse_exprs',
+        \ 'g:neoinclude#_reverse_exprs',
         \ 'ruby',
         \ 'substitute(v:fname, "\.rb$", "", "")')
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#reverse_exprs',
+        \ 'g:neoinclude#_reverse_exprs',
         \ 'python',
         \ "substitute(substitute(v:fname,
         \ '\\v.*egg%(-info|-link)?$', '', ''), '/', '.', 'g')")
   "}}}
   " Initialize filename include extensions. "{{{
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#exts',
+        \ 'g:neoinclude#_exts',
         \ 'c', ['h'])
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#exts',
+        \ 'g:neoinclude#_exts',
         \ 'cpp', ['', 'h', 'hpp', 'hxx'])
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#exts',
+        \ 'g:neoinclude#_exts',
         \ 'perl', ['pm'])
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#exts',
+        \ 'g:neoinclude#_exts',
         \ 'java', ['java'])
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#exts',
+        \ 'g:neoinclude#_exts',
         \ 'ruby', ['rb'])
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#exts',
+        \ 'g:neoinclude#_exts',
         \ 'python', ['py', 'py3'])
   "}}}
   " Initialize filename include delimiter. "{{{
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#delimiters',
+        \ 'g:neoinclude#_delimiters',
         \ 'c,cpp,ruby', '/')
   "}}}
 
   " Initialize ctags arguments. "{{{
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#ctags_arguments',
+        \ 'g:neoinclude#_ctags_arguments',
         \ '_', '')
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#ctags_arguments', 'vim',
+        \ 'g:neoinclude#_ctags_arguments', 'vim',
         \ '--language-force=vim --extra=fq --fields=afmiKlnsStz ' .
         \ "--regex-vim='/function!? ([a-z#:_0-9A-Z]+)/\\1/function/'")
   if neoinclude#util#is_mac()
     call neoinclude#util#set_default_dictionary(
-          \ 'g:neoinclude#ctags_arguments', 'c',
+          \ 'g:neoinclude#_ctags_arguments', 'c',
           \ '--c-kinds=+p --fields=+iaS --extra=+q
           \ -I__DARWIN_ALIAS,__DARWIN_ALIAS_C,__DARWIN_ALIAS_I,__DARWIN_INODE64
           \ -I__DARWIN_1050,__DARWIN_1050ALIAS,__DARWIN_1050ALIAS_C,__DARWIN_1050ALIAS_I,__DARWIN_1050INODE64
@@ -146,13 +155,13 @@ function! neoinclude#initialize() abort "{{{
           \ -I__DARWIN_LDBL_COMPAT,__DARWIN_LDBL_COMPAT2')
   else
     call neoinclude#util#set_default_dictionary(
-          \ 'g:neoinclude#ctags_arguments', 'c',
+          \ 'g:neoinclude#_ctags_arguments', 'c',
           \ '-R --sort=1 --c-kinds=+p --fields=+iaS --extra=+q ' .
           \ '-I __wur,__THROW,__attribute_malloc__,__nonnull+,'.
           \   '__attribute_pure__,__attribute_warn_unused_result__,__attribute__+')
   endif
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#ctags_arguments', 'cpp',
+        \ 'g:neoinclude#_ctags_arguments', 'cpp',
         \ '--language-force=C++ -R --sort=1 --c++-kinds=+p --fields=+iaS --extra=+q '.
         \ '-I __wur,__THROW,__attribute_malloc__,__nonnull+,'.
         \   '__attribute_pure__,__attribute_warn_unused_result__,__attribute__+')
@@ -185,32 +194,52 @@ endfunction"}}}
 
 function! neoinclude#get_path(bufnr, filetype) abort "{{{
   return neoinclude#util#substitute_path_separator(
-        \ get(g:neoinclude#paths, a:filetype,
+        \ neoinclude#util#get_default_buffer_config(
+        \   a:filetype, 'b:neoinclude_paths',
+        \   g:neoinclude#paths, g:neoinclude#_paths,
         \   getbufvar(a:bufnr, '&path')))
 endfunction"}}}
 function! neoinclude#get_pattern(bufnr, filetype) abort "{{{
-  return get(g:neoinclude#patterns,
-        \ a:filetype, getbufvar(a:bufnr, '&include'))
+  return neoinclude#util#get_default_buffer_config(
+        \   a:filetype, 'b:neoinclude_patterns',
+        \   g:neoinclude#patterns, g:neoinclude#_patterns,
+        \   getbufvar(a:bufnr, '&include'))
 endfunction"}}}
 function! neoinclude#get_expr(bufnr, filetype) abort "{{{
-  return get(g:neoinclude#exprs,
-        \ a:filetype, getbufvar(a:bufnr, '&includeexpr'))
+  return neoinclude#util#get_default_buffer_config(
+        \   a:filetype, 'b:neoinclude_exprs',
+        \   g:neoinclude#exprs, g:neoinclude#_exprs,
+        \   getbufvar(a:bufnr, '&includeexpr'))
 endfunction"}}}
 function! neoinclude#get_reverse_expr(filetype) abort "{{{
-  return get(g:neoinclude#reverse_exprs,
-        \ a:filetype, '')
+  return neoinclude#util#get_default_buffer_config(
+        \   a:filetype, 'b:neoinclude_reverse_exprs',
+        \   g:neoinclude#reverse_exprs, g:neoinclude#_reverse_exprs,
+        \   '')
 endfunction"}}}
 function! neoinclude#get_exts(filetype) abort "{{{
-  return get(g:neoinclude#exts,
-        \ a:filetype, [])
+  return neoinclude#util#get_default_buffer_config(
+        \   a:filetype, 'b:neoinclude_exts',
+        \   g:neoinclude#exts, g:neoinclude#_exts,
+        \   [])
 endfunction"}}}
 function! neoinclude#get_function(filetype) abort "{{{
-  return get(g:neoinclude#functions,
-        \ a:filetype, '')
+  return neoinclude#util#get_default_buffer_config(
+        \   a:filetype, 'b:neoinclude_functions',
+        \   g:neoinclude#functions, g:neoinclude#_functions,
+        \   '')
 endfunction"}}}
 function! neoinclude#get_delimiters(filetype) abort "{{{
-  return get(g:neoinclude#delimiters,
-        \ a:filetype, '.')
+  return neoinclude#util#get_default_buffer_config(
+        \   a:filetype, 'b:neoinclude_delimiters',
+        \   g:neoinclude#delimiters, g:neoinclude#_delimiters,
+        \   '.')
+endfunction"}}}
+function! neoinclude#get_suffixes(bufnr, filetype) abort "{{{
+  return neoinclude#util#get_default_buffer_config(
+        \   a:filetype, 'b:neoinclude_suffixes',
+        \   g:neoinclude#suffixes, g:neoinclude#_suffixes,
+        \   getbufvar(a:bufnr, '&suffixesadd'))
 endfunction"}}}
 
 " Analyze include files functions.

@@ -204,8 +204,10 @@ endfunction"}}}
 function! s:initialize_include(filename, filetype) "{{{
   " Initialize include list from tags.
   let tags_file_name = tempname()
-  let default = get(g:neoinclude#ctags_arguments, '_', '')
-  let args = get(g:neoinclude#ctags_arguments, a:filetype, default)
+  let args = neoinclude#util#get_buffer_config(a:filetype,
+        \ 'b:neoinclude_ctags_arguments',
+        \ g:neoinclude#ctags_arguments,
+        \ g:neoinclude#_ctags_arguments, '')
   if has('win32') || has('win64')
     let filename =
           \ neoinclude#util#substitute_path_separator(a:filename)
