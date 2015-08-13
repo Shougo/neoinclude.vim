@@ -11,6 +11,8 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 " Add commands. "{{{
+command! -complete=buffer -nargs=? NeoIncludeMakeCache
+      \ call neoinclude#include#make_cache(<q-args>)
 "}}}
 
 let &cpo = s:save_cpo

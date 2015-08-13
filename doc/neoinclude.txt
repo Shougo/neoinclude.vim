@@ -55,6 +55,11 @@ INTERFACE					*neoinclude-interface*
 ------------------------------------------------------------------------------
 COMMANDS 					*neoinclude-commands*
 
+:NeoIncludeMakeCache [bufname]			*:NeoIncludeMakeCache*
+		Make a cache based on the buffer with the name [bufname].
+		The command selects the current buffer when you omit
+		[bufname].
+
 ------------------------------------------------------------------------------
 VARIABLES 					*neoinclude-variables*
 
