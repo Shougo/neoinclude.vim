@@ -107,10 +107,10 @@ g:neoinclude#reverse_exprs			*g:neoinclude#reverse_exprs*
 
 		Example: Perl
 >
-		if !exists('g:neoinclude#exprs')
-		  let g:neoinclude#exprs = {}
+		if !exists('g:neoinclude#reverse_exprs')
+		  let g:neoinclude#reverse_exprs = {}
 		endif
-		let g:neoinclude#exprs.perl =
+		let g:neoinclude#reverse_exprs.perl =
 		\ 'fnamemodify(substitute(v:fname, "/", "::", "g"), ":r")'
 <
 g:neoinclude#exts				*g:neoinclude#exts*
