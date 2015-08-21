@@ -33,6 +33,7 @@ class Source(Base):
 
         self.name = 'file/include'
         self.mark = '[FI]'
+        self.is_bytepos = True
 
     def get_complete_position(self, context):
         return self.vim.eval("neoinclude#file_include#get_complete_position('{0}')"
