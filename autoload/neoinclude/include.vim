@@ -57,9 +57,9 @@ function! neoinclude#include#get_tag_files(...) "{{{
 
   let bufnr = get(a:000, 0, bufnr('%'))
   let include_files = neoinclude#include#get_include_files(bufnr)
-  return map(filter(map(include_files,
+  return filter(map(filter(map(include_files,
         \ 'get(s:async_include_cache, v:val, {})'),
-        \ '!empty(v:val)'), 'v:val.cachename')
+        \ '!empty(v:val)'), 'v:val.cachename'), 'filereadable(v:val)')
 endfunction"}}}
 
 " For Debug.
