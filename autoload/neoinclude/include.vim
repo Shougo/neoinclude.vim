@@ -125,7 +125,7 @@ function! s:check_buffer(bufnr, is_force) "{{{
       endif
 
       let s:async_include_cache[filename]
-            \ = s:initialize_include(filename, filetype)
+            \ = s:initialize_include(filename, filetype, a:is_force)
       let include_info.async_files[filename] = 1
     endif
   endfor
@@ -201,7 +201,7 @@ function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) "
   return include_files
 endfunction"}}}
 
-function! s:initialize_include(filename, filetype) "{{{
+function! s:initialize_include(filename, filetype, is_force) "{{{
   " Initialize include list from tags.
   let tags_file_name = tempname()
   let args = neoinclude#util#get_buffer_config(a:filetype,
@@ -218,7 +218,7 @@ function! s:initialize_include(filename, filetype) "{{{
           \ g:neoinclude#ctags_command, tags_file_name, args, a:filename)
   endif
 
-  if neoinclude#util#has_vimproc()
+  if !a:is_force && neoinclude#util#has_vimproc()
     call vimproc#system_bg(command)
   else
     call system(command)
