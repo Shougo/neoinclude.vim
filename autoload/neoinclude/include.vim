@@ -221,7 +221,7 @@ function! s:initialize_include(filename, filetype, is_force) "{{{
   if !a:is_force && neoinclude#util#has_vimproc()
     call vimproc#system_bg(command)
   else
-    call system(command)
+    call neoinclude#util#system(command)
   endif
 
   return {
