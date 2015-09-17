@@ -78,6 +78,9 @@ function! neoinclude#initialize() abort "{{{
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_patterns',
         \ 'ruby', '^\s*\<\%(load\|require\|require_relative\)\>')
+  call neoinclude#util#set_default_dictionary(
+        \ 'g:neoinclude#_patterns',
+        \ 'r', '^\s*source(')
   "}}}
   " Initialize include suffixes. "{{{
   call neoinclude#util#set_default_dictionary(
