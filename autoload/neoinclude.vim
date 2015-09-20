@@ -146,7 +146,7 @@ function! neoinclude#initialize() abort "{{{
         \ '_', '')
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_ctags_arguments', 'vim',
-        \ '--language-force=vim --extra=fq --fields=afmiKlnsStz ' .
+        \ '--language-force=vim --extra=fq --fields=afmiKlnsStz --vim-kinds=-f '.
         \ "--regex-vim='/function!? ([a-z#:_0-9A-Z]+)/\\1/function/'")
   if neoinclude#util#is_mac()
     call neoinclude#util#set_default_dictionary(
