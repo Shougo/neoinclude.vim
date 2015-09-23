@@ -146,7 +146,7 @@ function! neoinclude#initialize() abort "{{{
         \ '_', '')
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_ctags_arguments', 'vim',
-        \ '--language-force=vim --extra=fq --fields=afmilnsStz --vim-kinds=-f '.
+        \ '--language-force=vim --extra=fq --fields=+ailmnSz --vim-kinds=-f '.
         \ '--regex-vim=''/function!?[ \t]+'.
         \ '(([bwtglsa]:)?\w+(\.\w+)+|(g:)?([A-Z]\w*|\w+(#\w+)+)|s:\w+)'.
         \ '[ \t]*\(/\1/function/''')
