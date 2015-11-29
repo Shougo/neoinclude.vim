@@ -81,6 +81,9 @@ function! neoinclude#initialize() abort "{{{
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_patterns',
         \ 'r', '^\s*source(')
+  call neoinclude#util#set_default_dictionary(
+        \ 'g:neoinclude#_patterns',
+        \ 'html,xhtml,xml,markdown,mkd', 'src="[^"]*')
   "}}}
   " Initialize include suffixes. "{{{
   call neoinclude#util#set_default_dictionary(

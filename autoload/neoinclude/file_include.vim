@@ -46,7 +46,7 @@ function! neoinclude#file_include#get_complete_position(input) "{{{
 
   " Check include pattern.
   let pattern = neoinclude#get_pattern('%', filetype)
-  if pattern != ''
+  if pattern =~ '\w$'
     let pattern .= '\m\s\+'
   endif
   if pattern == '' || a:input !~ pattern
