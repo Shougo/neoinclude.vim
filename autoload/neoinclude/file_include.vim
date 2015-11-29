@@ -128,8 +128,13 @@ function! neoinclude#file_include#get_include_files(input) "{{{
     endif
 
     " Remove before delimiter.
-    if strridx(dict.word, delimiter) >= 0
+    if delimiter != '' && strridx(dict.word, delimiter) >= 0
       let dict.word = dict.word[strridx(dict.word, delimiter)+1: ]
+    endif
+
+    " Remove bufdirectory.
+    if stridx(dict.word, bufdirectory . '/') == 0
+      let dict.word = dict.word[len(bufdirectory)+1 : ]
     endif
 
     let dict.abbr = dict.word

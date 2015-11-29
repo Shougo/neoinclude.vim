@@ -141,6 +141,9 @@ function! neoinclude#initialize() abort "{{{
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_delimiters',
         \ 'c,cpp,ruby', '/')
+  call neoinclude#util#set_default_dictionary(
+        \ 'g:neoinclude#_delimiters',
+        \ 'html', '')
   "}}}
 
   " Initialize ctags arguments. "{{{
@@ -201,11 +204,15 @@ function! neoinclude#set_filetype_paths(bufnr, filetype) abort "{{{
 endfunction"}}}
 
 function! neoinclude#get_path(bufnr, filetype) abort "{{{
+  " Don't use global path if it is not C or C++
+  let default = (a:filetype ==# 'c' || a:filetype ==# 'cpp'
+        \ || getbufvar(a:bufnr, '&path') !=# &path) ?
+        \ getbufvar(a:bufnr, '&path') : '.'
   return neoinclude#util#substitute_path_separator(
         \ neoinclude#util#get_default_buffer_config(
         \   a:filetype, 'b:neoinclude_paths',
         \   g:neoinclude#paths, g:neoinclude#_paths,
-        \   getbufvar(a:bufnr, '&path')))
+        \   default))
 endfunction"}}}
 function! neoinclude#get_pattern(bufnr, filetype) abort "{{{
   return neoinclude#util#get_default_buffer_config(
