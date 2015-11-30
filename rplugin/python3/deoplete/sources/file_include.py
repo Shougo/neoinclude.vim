@@ -34,12 +34,12 @@ class Source(Base):
         self.name = 'file/include'
         self.mark = '[FI]'
         self.is_bytepos = True
+        self.min_pattern_length = 0
 
     def get_complete_position(self, context):
-        return self.vim.eval("neoinclude#file_include#get_complete_position('{0}')"
-                             .format(deoplete.util.escape(context['input'])
-                                     ))
+        return self.vim.call(
+            'neoinclude#file_include#get_complete_position', context['input'])
 
     def gather_candidates(self, context):
-        return self.vim.eval("neoinclude#file_include#get_include_files('{0}')"
-                        .format(deoplete.util.escape(context['input'])))
+        return self.vim.call(
+            'neoinclude#file_include#get_include_files', context['input'])
