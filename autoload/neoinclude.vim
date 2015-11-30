@@ -143,7 +143,7 @@ function! neoinclude#initialize() abort "{{{
         \ 'c,cpp,ruby', '/')
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_delimiters',
-        \ 'html', '')
+        \ 'html,xhtml,xml,markdown,mkd', '')
   "}}}
 
   " Initialize ctags arguments. "{{{
