@@ -59,7 +59,7 @@ function! neoinclude#file_include#get_complete_position(input) "{{{
   let complete_pos = len(a:input) - len(complete_str)
 
   let delimiter = neoinclude#get_delimiters(filetype)
-  if strridx(complete_str, delimiter) >= 0
+  if delimiter != '' && strridx(complete_str, delimiter) >= 0
     let complete_pos += strridx(complete_str, delimiter) + 1
   endif
 
