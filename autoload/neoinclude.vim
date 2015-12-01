@@ -83,7 +83,7 @@ function! neoinclude#initialize() abort "{{{
         \ 'r', '^\s*source(')
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_patterns',
-        \ 'html,xhtml,xml,markdown,mkd', 'src="\ze[^"]*')
+        \ 'html,xhtml,xml,markdown,mkd', '\%(src\|href\)="\ze[^"]*$')
   "}}}
   " Initialize include suffixes. "{{{
   call neoinclude#util#set_default_dictionary(
