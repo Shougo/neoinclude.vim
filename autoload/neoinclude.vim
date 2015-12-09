@@ -209,49 +209,49 @@ function! neoinclude#get_path(bufnr, filetype) abort "{{{
         \ || getbufvar(a:bufnr, '&path') !=# &path) ?
         \ getbufvar(a:bufnr, '&path') : '.'
   return neoinclude#util#substitute_path_separator(
-        \ neoinclude#util#get_default_buffer_config(
+        \ neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_paths',
         \   g:neoinclude#paths, g:neoinclude#_paths,
         \   default))
 endfunction"}}}
 function! neoinclude#get_pattern(bufnr, filetype) abort "{{{
-  return neoinclude#util#get_default_buffer_config(
+  return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_patterns',
         \   g:neoinclude#patterns, g:neoinclude#_patterns,
         \   getbufvar(a:bufnr, '&include'))
 endfunction"}}}
 function! neoinclude#get_expr(bufnr, filetype) abort "{{{
-  return neoinclude#util#get_default_buffer_config(
+  return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_exprs',
         \   g:neoinclude#exprs, g:neoinclude#_exprs,
         \   getbufvar(a:bufnr, '&includeexpr'))
 endfunction"}}}
 function! neoinclude#get_reverse_expr(filetype) abort "{{{
-  return neoinclude#util#get_default_buffer_config(
+  return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_reverse_exprs',
         \   g:neoinclude#reverse_exprs, g:neoinclude#_reverse_exprs,
         \   '')
 endfunction"}}}
 function! neoinclude#get_exts(filetype) abort "{{{
-  return neoinclude#util#get_default_buffer_config(
+  return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_exts',
         \   g:neoinclude#exts, g:neoinclude#_exts,
         \   [])
 endfunction"}}}
 function! neoinclude#get_function(filetype) abort "{{{
-  return neoinclude#util#get_default_buffer_config(
+  return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_functions',
         \   g:neoinclude#functions, g:neoinclude#_functions,
         \   '')
 endfunction"}}}
 function! neoinclude#get_delimiters(filetype) abort "{{{
-  return neoinclude#util#get_default_buffer_config(
+  return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_delimiters',
         \   g:neoinclude#delimiters, g:neoinclude#_delimiters,
         \   '.')
 endfunction"}}}
 function! neoinclude#get_suffixes(bufnr, filetype) abort "{{{
-  return neoinclude#util#get_default_buffer_config(
+  return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_suffixes',
         \   g:neoinclude#suffixes, g:neoinclude#_suffixes,
         \   getbufvar(a:bufnr, '&suffixesadd'))

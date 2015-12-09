@@ -156,7 +156,7 @@ function! neoinclude#util#get_buffer_config(
   let default_val = get(a:000, 0, '')
 
   if exists(a:buffer_var)
-    return a:buffer_var
+    return {a:buffer_var}
   endif
 
   let filetype = !has_key(a:user_var, a:filetype)
@@ -164,15 +164,6 @@ function! neoinclude#util#get_buffer_config(
 
   return get(a:user_var, filetype,
         \   get(a:default_var, filetype, default_val))
-endfunction"}}}
-function! neoinclude#util#get_default_buffer_config(
-      \ filetype, buffer_var, user_var, default_var, ...) "{{{
-  let default_val = get(a:000, 0, '')
-  return (exists(a:buffer_var) || has_key(a:user_var, a:filetype)) ?
-        \ neoinclude#util#get_buffer_config(
-        \  a:filetype, a:buffer_var, a:user_var, a:default_var, default_val) :
-        \ neoinclude#util#get_buffer_config(
-        \  a:filetype, a:buffer_var, a:user_var, a:default_var, default_val)
 endfunction"}}}
 
 let &cpo = s:save_cpo
