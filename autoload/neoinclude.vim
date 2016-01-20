@@ -33,8 +33,9 @@ function! neoinclude#initialize() abort "{{{
     return
   endif
 
-  let g:neoinclude#ctags_command =
-      \ get(g:, 'neoinclude#ctags_command', 'ctags')
+  let g:neoinclude#ctags_commands =
+      \ get(g:, 'neoinclude#ctags_commands', {})
+  let g:neoinclude#_ctags_commands = {}
   let g:neoinclude#ctags_arguments =
       \ get(g:, 'neoinclude#ctags_arguments', {})
   let g:neoinclude#_ctags_arguments = {}
@@ -146,6 +147,14 @@ function! neoinclude#initialize() abort "{{{
         \ 'html,xhtml,xml,markdown,mkd', '')
   "}}}
 
+  " Initialize ctags command. "{{{
+  call neoinclude#util#set_default_dictionary(
+        \ 'g:neoinclude#_ctags_commands',
+        \ '_', 'ctags')
+  call neoinclude#util#set_default_dictionary(
+        \ 'g:neoinclude#_ctags_commands',
+        \ 'go', 'gotags')
+  "}}}
   " Initialize ctags arguments. "{{{
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_ctags_arguments',

@@ -69,12 +69,18 @@ g:neoinclude#max_processes			*g:neoinclude#max_processes*
 
 		Default value is 20.
 
-g:neoinclude#ctags_command			*g:neoinclude#ctags_command*
-		It is the path to the ctags command.
+g:neoinclude#ctags_commands			*g:neoinclude#ctags_commands*
+		It is the dictionary of the path to the ctags command.  The
+		dictionary's key is filetype.  If the key is "_", it will be
+		used for default.
 		Note: If this command is not installed, "include" source is
 		disabled.
 
-		Default value is "ctags".
+		Default value is in "g:neoinclude#_ctags_commands".
+
+						*b:neoinclude_ctags_commands*
+b:neoinclude_ctags_commands
+		Buffer local variable of |g:neoinclude#_ctags_commands|.
 
 g:neoinclude#ctags_arguments			*g:neoinclude#ctags_arguments*
 		It is the dictionary of the character string to set a value

@@ -105,14 +105,18 @@ function! s:check_buffer(bufnr, is_force) "{{{
     let include_info.include_files = neoinclude#util#uniq(include_files)
   endif
 
-  if g:neoinclude#max_processes <= 0
-        \ || !executable(g:neoinclude#ctags_command)
-    return
-  endif
-
   let filetype = getbufvar(bufnr, '&filetype')
   if filetype == ''
     let filetype = 'nothing'
+  endif
+
+  let ctags = neoinclude#util#get_buffer_config(filetype,
+        \ 'b:neoinclude_ctags_commands',
+        \ g:neoinclude#ctags_commands,
+        \ g:neoinclude#_ctags_commands, '')
+
+  if g:neoinclude#max_processes <= 0 || !executable(ctags)
+    return
   endif
 
   for filename in include_info.include_files
@@ -125,7 +129,7 @@ function! s:check_buffer(bufnr, is_force) "{{{
       endif
 
       let s:async_include_cache[filename]
-            \ = s:initialize_include(filename, filetype, a:is_force)
+            \ = s:initialize_include(filename, filetype, ctags, a:is_force)
       let include_info.async_files[filename] = 1
     endif
   endfor
@@ -201,7 +205,7 @@ function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) "
   return include_files
 endfunction"}}}
 
-function! s:initialize_include(filename, filetype, is_force) "{{{
+function! s:initialize_include(filename, filetype, ctags, is_force) "{{{
   " Initialize include list from tags.
   let tags_file_name = tempname()
   let args = neoinclude#util#get_buffer_config(a:filetype,
@@ -212,10 +216,10 @@ function! s:initialize_include(filename, filetype, is_force) "{{{
     let filename =
           \ neoinclude#util#substitute_path_separator(a:filename)
     let command = printf('%s -f "%s" %s "%s" ',
-          \ g:neoinclude#ctags_command, tags_file_name, args, filename)
+          \ a:ctags, tags_file_name, args, filename)
   else
     let command = printf('%s -f ''%s'' 2>/dev/null %s ''%s''',
-          \ g:neoinclude#ctags_command, tags_file_name, args, a:filename)
+          \ a:ctags, tags_file_name, args, a:filename)
   endif
 
   if !a:is_force && neoinclude#util#has_vimproc()
