@@ -33,6 +33,7 @@ let s:source = {
       \ 'rank' : 150,
       \ 'sorters' : 'sorter_filename',
       \ 'converters' : ['converter_remove_overlap', 'converter_abbr'],
+      \ 'min_pattern_length' : 0,
       \}
 
 function! neocomplete#sources#file_include#define() "{{{
