@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neoinclude#include#initialize() "{{{
+function! neoinclude#include#initialize() abort "{{{
   let s:include_info = {}
   let s:include_cache = {}
   let s:async_include_cache = {}
@@ -37,7 +37,7 @@ function! neoinclude#include#initialize() "{{{
   augroup END
 endfunction"}}}
 
-function! neoinclude#include#get_include_files(...) "{{{
+function! neoinclude#include#get_include_files(...) abort "{{{
   call neoinclude#initialize()
 
   call s:check_buffer('', 0)
@@ -50,7 +50,7 @@ function! neoinclude#include#get_include_files(...) "{{{
   endif
 endfunction"}}}
 
-function! neoinclude#include#get_tag_files(...) "{{{
+function! neoinclude#include#get_tag_files(...) abort "{{{
   call neoinclude#initialize()
 
   call s:check_buffer('', 0)
@@ -63,13 +63,13 @@ function! neoinclude#include#get_tag_files(...) "{{{
 endfunction"}}}
 
 " For Debug.
-function! neoinclude#include#get_current_include_files() "{{{
+function! neoinclude#include#get_current_include_files() abort "{{{
   call neoinclude#initialize()
 
   return s:get_buffer_include_files(bufnr('%'))
 endfunction"}}}
 
-function! s:check_buffer(bufnr, is_force) "{{{
+function! s:check_buffer(bufnr, is_force) abort "{{{
   let bufnr = (a:bufnr == '') ? bufnr('%') : a:bufnr
   let filename = fnamemodify(bufname(bufnr), ':p')
 
@@ -135,7 +135,7 @@ function! s:check_buffer(bufnr, is_force) "{{{
   endfor
 endfunction"}}}
 
-function! s:get_buffer_include_files(bufnr) "{{{
+function! s:get_buffer_include_files(bufnr) abort "{{{
   let filetype = getbufvar(a:bufnr, '&filetype')
   if filetype == ''
     return []
@@ -170,7 +170,7 @@ function! s:get_buffer_include_files(bufnr) "{{{
 
   return neoinclude#util#uniq(include_files)
 endfunction"}}}
-function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) "{{{
+function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) abort "{{{
   let include_files = []
   for line in a:lines "{{{
     if line =~ a:pattern
@@ -205,7 +205,7 @@ function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) "
   return include_files
 endfunction"}}}
 
-function! s:initialize_include(filename, filetype, ctags, is_force) "{{{
+function! s:initialize_include(filename, filetype, ctags, is_force) abort "{{{
   " Initialize include list from tags.
   let tags_file_name = tempname()
   let args = neoinclude#util#get_buffer_config(a:filetype,
@@ -233,7 +233,7 @@ function! s:initialize_include(filename, filetype, ctags, is_force) "{{{
         \ 'cachename' : tags_file_name,
         \ }
 endfunction"}}}
-function! neoinclude#include#make_cache(bufname) "{{{
+function! neoinclude#include#make_cache(bufname) abort "{{{
   call neoinclude#initialize()
 
   let bufnr = (a:bufname == '') ? bufnr('%') : bufnr(a:bufname)

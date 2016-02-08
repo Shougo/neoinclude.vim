@@ -267,7 +267,7 @@ function! neoinclude#get_suffixes(bufnr, filetype) abort "{{{
 endfunction"}}}
 
 " Analyze include files functions.
-function! neoinclude#analyze_vim_include_files(lines, path) "{{{
+function! neoinclude#analyze_vim_include_files(lines, path) abort "{{{
   let include_files = []
   let dup_check = {}
   for line in a:lines
@@ -288,7 +288,7 @@ function! neoinclude#analyze_vim_include_files(lines, path) "{{{
 
   return include_files
 endfunction"}}}
-function! neoinclude#analyze_ruby_include_files(lines, path) "{{{
+function! neoinclude#analyze_ruby_include_files(lines, path) abort "{{{
   let include_files = []
   let dup_check = {}
   for line in a:lines
@@ -314,7 +314,7 @@ function! neoinclude#analyze_ruby_include_files(lines, path) "{{{
   return include_files
 endfunction"}}}
 
-function! s:set_python_paths(python_bin) "{{{
+function! s:set_python_paths(python_bin) abort "{{{
   let python_sys_path_cmd = a:python_bin .
         \ ' -c "import sys;sys.stdout.write(\",\".join(sys.path))"'
   let path = neoinclude#util#system(python_sys_path_cmd)
@@ -324,7 +324,7 @@ function! s:set_python_paths(python_bin) "{{{
         \ 'g:neoinclude#paths', a:python_bin, path)
 endfunction"}}}
 
-function! s:set_cpp_paths(bufnr) "{{{
+function! s:set_cpp_paths(bufnr) abort "{{{
   if exists('*vimproc#readdir')
     let files = vimproc#readdir('/usr/include/')
           \ + vimproc#readdir('/usr/include/c++/')

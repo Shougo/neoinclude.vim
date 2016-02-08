@@ -26,7 +26,7 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-function! neoinclude#file_include#get_complete_position(input) "{{{
+function! neoinclude#file_include#get_complete_position(input) abort "{{{
   call neoinclude#initialize()
 
   let filetype = neoinclude#util#get_context_filetype()
@@ -66,7 +66,7 @@ function! neoinclude#file_include#get_complete_position(input) "{{{
   return complete_pos
 endfunction"}}}
 
-function! neoinclude#file_include#get_include_files(input) "{{{
+function! neoinclude#file_include#get_include_files(input) abort "{{{
   call neoinclude#initialize()
 
   let filetype = neoinclude#util#get_context_filetype()
@@ -148,7 +148,7 @@ function! neoinclude#file_include#get_include_files(input) "{{{
   return candidates
 endfunction"}}}
 
-function! s:get_default_include_files(filetype) "{{{
+function! s:get_default_include_files(filetype) abort "{{{
   let files = []
 
   if a:filetype ==# 'python' || a:filetype ==# 'python3'

@@ -28,10 +28,10 @@ set cpo&vim
 
 let s:V = vital#of('neoinclude')
 
-function! neoinclude#util#get_vital() "{{{
+function! neoinclude#util#get_vital() abort "{{{
   return s:V
 endfunction"}}}
-function! s:get_process() "{{{
+function! s:get_process() abort "{{{
   if !exists('s:Process')
     let s:Process = neoinclude#util#get_vital().import('Process')
   endif
@@ -57,7 +57,7 @@ function! neoinclude#util#is_mac() abort
   return s:is_mac
 endfunction
 
-function! neoinclude#util#uniq(list) "{{{
+function! neoinclude#util#uniq(list) abort "{{{
   let dict = {}
   for item in a:list
     if !has_key(dict, item)
@@ -68,7 +68,7 @@ function! neoinclude#util#uniq(list) "{{{
   return values(dict)
 endfunction"}}}
 
-function! neoinclude#util#glob(pattern, ...) "{{{
+function! neoinclude#util#glob(pattern, ...) abort "{{{
   if a:pattern =~ "'"
     " Use glob('*').
     let cwd = getcwd()
@@ -102,14 +102,14 @@ function! neoinclude#util#glob(pattern, ...) "{{{
   endif
 endfunction"}}}
 
-function! neoinclude#util#substitute_path_separator(path) "{{{
+function! neoinclude#util#substitute_path_separator(path) abort "{{{
   return s:is_windows ? substitute(a:path, '\\', '/', 'g') : a:path
 endfunction"}}}
 
-function! neoinclude#util#set_default_dictionary(variable, keys, value) "{{{
+function! neoinclude#util#set_default_dictionary(variable, keys, value) abort "{{{
   call neoinclude#util#set_dictionary_helper({a:variable}, a:keys, a:value)
 endfunction"}}}
-function! neoinclude#util#set_dictionary_helper(variable, keys, pattern) "{{{
+function! neoinclude#util#set_dictionary_helper(variable, keys, pattern) abort "{{{
   for key in split(a:keys, '\s*,\s*')
     if !has_key(a:variable, key)
       let a:variable[key] = a:pattern
@@ -117,11 +117,11 @@ function! neoinclude#util#set_dictionary_helper(variable, keys, pattern) "{{{
   endfor
 endfunction"}}}
 
-function! neoinclude#util#system(...) "{{{
+function! neoinclude#util#system(...) abort "{{{
   return call(s:get_process().system, a:000)
 endfunction"}}}
 
-function! neoinclude#util#has_vimproc() "{{{
+function! neoinclude#util#has_vimproc() abort "{{{
   " Initialize.
   if !exists('s:exists_vimproc')
     " Check vimproc.
