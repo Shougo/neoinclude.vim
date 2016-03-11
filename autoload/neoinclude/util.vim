@@ -166,6 +166,14 @@ function! neoinclude#util#get_buffer_config(
         \   get(a:default_var, filetype, default_val))
 endfunction"}}}
 
+function! neoinclude#util#head_match(checkstr, headstr) abort "{{{
+  let checkstr = &ignorecase ?
+        \ tolower(a:checkstr) : a:checkstr
+  let headstr = &ignorecase ?
+        \ tolower(a:headstr) : a:headstr
+  return stridx(checkstr, headstr) == 0
+endfunction"}}}
+
 let &cpo = s:save_cpo
 unlet s:save_cpo
 
