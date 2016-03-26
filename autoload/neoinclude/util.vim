@@ -26,18 +26,6 @@
 let s:save_cpo = &cpo
 set cpo&vim
 
-let s:V = vital#of('neoinclude')
-
-function! neoinclude#util#get_vital() abort "{{{
-  return s:V
-endfunction"}}}
-function! s:get_process() abort "{{{
-  if !exists('s:Process')
-    let s:Process = neoinclude#util#get_vital().import('Process')
-  endif
-  return s:Process
-endfunction"}}}
-
 let s:is_windows = has('win16') || has('win32') || has('win64') || has('win95')
 let s:is_cygwin = has('win32unix')
 let s:is_mac = !s:is_windows && !s:is_cygwin
@@ -117,8 +105,15 @@ function! neoinclude#util#set_dictionary_helper(variable, keys, pattern) abort "
   endfor
 endfunction"}}}
 
-function! neoinclude#util#system(...) abort "{{{
-  return call(s:get_process().system, a:000)
+function! neoinclude#util#system(command) abort "{{{
+  let command = s:iconv(a:command, &encoding, 'char')
+
+  let output = neoinclude#util#has_vimproc() ?
+        \ vimproc#system(command) : system(command)
+
+  let output = s:iconv(output, 'char', &encoding)
+
+  return substitute(output, '\n$', '', '')
 endfunction"}}}
 
 function! neoinclude#util#has_vimproc() abort "{{{
@@ -134,6 +129,13 @@ function! neoinclude#util#has_vimproc() abort "{{{
   endif
 
   return s:exists_vimproc
+endfunction"}}}
+function! s:iconv(expr, from, to) abort "{{{
+  if a:from == '' || a:to == '' || a:from ==? a:to
+    return a:expr
+  endif
+  let result = iconv(a:expr, a:from, a:to)
+  return result != '' ? result : a:expr
 endfunction"}}}
 
 function! neoinclude#util#get_context_filetype() abort "{{{
