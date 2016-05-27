@@ -178,7 +178,12 @@ function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) a
       if a:expr != ''
         let eval = substitute(a:expr, 'v:fname',
               \ string(matchstr(line[match_end :], '\f\+')), 'g')
-        let filename = fnamemodify(findfile(eval(eval), a:path), ':p')
+        try
+          let filename = fnamemodify(findfile(eval(eval), a:path), ':p')
+        catch
+          " Error
+          let filename = ''
+        endtry
       else
         let filename = fnamemodify(findfile(
               \ matchstr(line[match_end :], '\f\+'), a:path), ':p')
