@@ -217,7 +217,10 @@ function! s:initialize_include(filename, filetype, ctags, is_force) abort "{{{
         \ 'b:neoinclude_ctags_arguments',
         \ g:neoinclude#ctags_arguments,
         \ g:neoinclude#_ctags_arguments, '')
-  if has('win32') || has('win64')
+  if a:ctags == 'jsctags'
+    let command = printf('%s ''%s'' %s >''%s''',
+          \ a:ctags, a:filename, args, tags_file_name)
+  elseif has('win32') || has('win64')
     let filename =
           \ neoinclude#util#substitute_path_separator(a:filename)
     let command = printf('%s -f "%s" %s "%s" ',
