@@ -215,7 +215,7 @@ endfunction"}}}
 function! neoinclude#get_path(bufnr, filetype) abort "{{{
   " Don't use global path if it is not C or C++
   let default = (a:filetype ==# 'c' || a:filetype ==# 'cpp'
-        \ || getbufvar(a:bufnr, '&path') !=# &path) ?
+        \ || getbufvar(a:bufnr, '&path') !=# &g:path) ?
         \ getbufvar(a:bufnr, '&path') : '.'
   return neoinclude#util#substitute_path_separator(
         \ neoinclude#util#get_buffer_config(
