@@ -129,7 +129,7 @@ function! neoinclude#file_include#get_include_files(input) abort "{{{
 
     " Remove before delimiter.
     if delimiter != '' && strridx(dict.word, delimiter) >= 0
-      let dict.word = dict.word[strridx(dict.word, delimiter)+1: ]
+      let dict.word = dict.word[strridx(dict.word, delimiter)+strlen(delimiter): ]
     endif
 
     " Remove bufdirectory.
