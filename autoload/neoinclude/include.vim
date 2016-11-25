@@ -230,11 +230,7 @@ function! s:initialize_include(filename, filetype, ctags, is_force) abort "{{{
           \ a:ctags, tags_file_name, args, a:filename)
   endif
 
-  if !a:is_force && neoinclude#util#has_vimproc()
-    call vimproc#system_bg(command)
-  else
-    call neoinclude#util#system(command)
-  endif
+  call neoinclude#util#async_system(command, a:is_force)
 
   return {
         \ 'filename' : a:filename,

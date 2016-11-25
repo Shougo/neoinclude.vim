@@ -108,12 +108,26 @@ endfunction"}}}
 function! neoinclude#util#system(command) abort "{{{
   let command = s:iconv(a:command, &encoding, 'char')
 
-  let output = neoinclude#util#has_vimproc() ?
+  let output = neoinclude#util#has_vimproc()
+        \ && neoinclude#util#is_windows() ?
         \ vimproc#system(command) : system(command)
 
   let output = s:iconv(output, 'char', &encoding)
 
   return substitute(output, '\n$', '', '')
+endfunction"}}}
+function! neoinclude#util#async_system(command, is_force) abort "{{{
+  if a:is_force
+    return neoinclude#util#system(command)
+  elseif has('job')
+    return job_start(command)
+  elseif has('nvim')
+    return jobstart(command)
+  elseif neoinclude#util#has_vimproc()
+    return vimproc#system_bg(command)
+  else
+    return neoinclude#util#system(command)
+  endif
 endfunction"}}}
 
 function! neoinclude#util#has_vimproc() abort "{{{
