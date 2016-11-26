@@ -116,7 +116,10 @@ function! neoinclude#util#system(command) abort "{{{
 
   return substitute(output, '\n$', '', '')
 endfunction"}}}
+
 function! neoinclude#util#async_system(command, is_force) abort "{{{
+  let command = s:iconv(a:command, &encoding, 'char')
+
   if a:is_force
     return neoinclude#util#system(command)
   elseif has('job')
