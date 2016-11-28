@@ -118,15 +118,15 @@ function! neoinclude#util#system(command) abort "{{{
 endfunction"}}}
 function! neoinclude#util#async_system(command, is_force) abort "{{{
   if a:is_force
-    return neoinclude#util#system(command)
+    return neoinclude#util#system(a:command)
   elseif has('job')
-    return job_start(command)
+    return job_start(a:command)
   elseif has('nvim')
-    return jobstart(command)
+    return jobstart(a:command)
   elseif neoinclude#util#has_vimproc()
-    return vimproc#system_bg(command)
+    return vimproc#system_bg(a:command)
   else
-    return neoinclude#util#system(command)
+    return neoinclude#util#system(a:command)
   endif
 endfunction"}}}
 
