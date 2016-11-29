@@ -116,15 +116,15 @@ function! neoinclude#util#system(command) abort "{{{
 
   return substitute(output, '\n$', '', '')
 endfunction"}}}
-function! neoinclude#util#async_system(command, is_force) abort "{{{
-  if a:is_force
-    return neoinclude#util#system(a:command)
-  elseif has('job')
-    return job_start(a:command)
+function! neoinclude#util#async_system(command) abort "{{{
+  let command = s:iconv(a:command, &encoding, 'char')
+
+  if has('job')
+    return job_start(command)
   elseif has('nvim')
-    return jobstart(a:command)
+    return jobstart(command)
   elseif neoinclude#util#has_vimproc()
-    return vimproc#system_bg(a:command)
+    return vimproc#system_bg(command)
   else
     return neoinclude#util#system(a:command)
   endif

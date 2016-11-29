@@ -230,7 +230,11 @@ function! s:initialize_include(filename, filetype, ctags, is_force) abort "{{{
           \ a:ctags, tags_file_name, args, a:filename)
   endif
 
-  call neoinclude#util#async_system(command, a:is_force)
+  if a:is_force
+    call neoinclude#util#system(command)
+  else
+    call neoinclude#util#async_system(command)
+  endif
 
   return {
         \ 'filename' : a:filename,
