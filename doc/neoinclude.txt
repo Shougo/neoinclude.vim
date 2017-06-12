@@ -1,4 +1,4 @@
-*neoinclude.txt*	Include completion framework for neocomplete/deoplete.
+*neoinclude.txt*	Include completion framework for neocomplete/deoplete/ncm.
 
 Version: 0.1
 Author: Shougo <Shougo.Matsu at gmail.com>
@@ -36,18 +36,20 @@ FAQ			|neoinclude-faq|
 ==============================================================================
 INTRODUCTION					*neoinclude-introduction*
 
-*neoinclude* is the framework for |neocomplete|/|deoplete|.
+*neoinclude* is the framework for |neocomplete|/|deoplete|/|ncm|.
 
-It has "file/include" source and extends tag sources in neocomplete/deoplete.
+It has "file/include" source and extends tag sources in neocomplete/deoplete/ncm.
 
 ==============================================================================
 INSTALL						*neoinclude-install*
 
-Requirements: neocomplete.vim or deoplete.nvim
+Requirements: neocomplete.vim , deoplete.nvim or ncm
 
 https://github.com/Shougo/neocomplete.vim
 
 https://github.com/Shougo/deoplete.nvim
+
+https://github.com/roxma/nvim-completion-manager
 
 ==============================================================================
 INTERFACE					*neoinclude-interface*
