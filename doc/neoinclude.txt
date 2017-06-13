@@ -43,7 +43,7 @@ It has "file/include" source and extends tag sources in neocomplete/deoplete/ncm
 ==============================================================================
 INSTALL						*neoinclude-install*
 
-Requirements: neocomplete.vim , deoplete.nvim or ncm
+Requirements: neocomplete.vim, deoplete.nvim or ncm
 
 https://github.com/Shougo/neocomplete.vim
 
