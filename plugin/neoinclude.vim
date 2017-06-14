@@ -20,4 +20,13 @@ unlet s:save_cpo
 
 let g:loaded_neoinclude = 1
 
+" Register source for NCM
+autocmd User CmSetup call cm#register_source({
+      \ 'name': 'neoinclude',
+      \ 'abbreviation': 'FI',
+      \ 'priority': 8,
+      \ 'cm_refresh': 'cm#sources#neoinclude#refresh',
+      \ 'cm_refresh_min_word_len': 0,
+      \ })
+
 " vim: foldmethod=marker
