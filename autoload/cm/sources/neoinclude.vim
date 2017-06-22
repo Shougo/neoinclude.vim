@@ -11,7 +11,7 @@ function! cm#sources#neoinclude#refresh(opt, ctx) abort
 
   let inc = neoinclude#file_include#get_include_files(typed)
 
-  let matches = map(inc, "{'word': v:val['abbr'], 'dup': 1, 'icase': 1, 'menu': 'FI: ' . v:val['kind']}")
+  let matches = map(inc, "{'word': v:val['word'], 'dup': 1, 'icase': 1, 'menu': 'FI: ' . v:val['kind']}")
 
   call cm#complete(a:opt.name, a:ctx, startcol, matches)
 endfunction
