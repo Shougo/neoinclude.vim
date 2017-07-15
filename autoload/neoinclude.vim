@@ -325,18 +325,9 @@ function! s:set_python_paths(python_bin) abort "{{{
 endfunction"}}}
 
 function! s:set_cpp_paths(bufnr) abort "{{{
-  if exists('*vimproc#readdir')
-    let files = vimproc#readdir('/usr/include/')
-          \ + vimproc#readdir('/usr/include/c++/')
-    for directory in filter(split(glob(
-          \ '/usr/include/*/c++'), '\n'), 'isdirectory(v:val)')
-      let files += vimproc#readdir(directory)
-    endfor
-  else
-    let files = split(glob('/usr/include/*'), '\n')
-          \ + split(glob('/usr/include/c++/*'), '\n')
-          \ + split(glob('/usr/include/*/c++/*'), '\n')
-  endif
+  let files = split(glob('/usr/include/*'), '\n')
+        \ + split(glob('/usr/include/c++/*'), '\n')
+        \ + split(glob('/usr/include/*/c++/*'), '\n')
   call filter(files, 'isdirectory(v:val)')
 
   " Add cpp path.

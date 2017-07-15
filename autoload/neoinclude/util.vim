@@ -75,19 +75,14 @@ function! neoinclude#util#glob(pattern, ...) abort "{{{
   " let is_force_glob = get(a:000, 0, 0)
   let is_force_glob = get(a:000, 0, 1)
 
-  if !is_force_glob && a:pattern =~ '^[^\\*]\+/\*'
-        \ && neoinclude#util#has_vimproc() && exists('*vimproc#readdir')
-    return filter(vimproc#readdir(a:pattern[: -2]), 'v:val !~ "/\\.\\.\\?$"')
+  " Escape [.
+  if neoinclude#util#is_windows()
+    let glob = substitute(a:pattern, '\[', '\\[[]', 'g')
   else
-    " Escape [.
-    if neoinclude#util#is_windows()
-      let glob = substitute(a:pattern, '\[', '\\[[]', 'g')
-    else
-      let glob = escape(a:pattern, '[')
-    endif
-
-    return split(neoinclude#util#substitute_path_separator(glob(glob)), '\n')
+    let glob = escape(a:pattern, '[')
   endif
+
+  return split(neoinclude#util#substitute_path_separator(glob(glob)), '\n')
 endfunction"}}}
 
 function! neoinclude#util#substitute_path_separator(path) abort "{{{
@@ -107,12 +102,7 @@ endfunction"}}}
 
 function! neoinclude#util#system(command) abort "{{{
   let command = s:iconv(a:command, &encoding, 'char')
-
-  let output = neoinclude#util#has_vimproc()
-        \ && neoinclude#util#is_windows() ?
-        \ vimproc#system(command) : system(command)
-
-  let output = s:iconv(output, 'char', &encoding)
+  let output = s:iconv(system(command), 'char', &encoding)
 
   return substitute(output, '\n$', '', '')
 endfunction"}}}
@@ -123,27 +113,11 @@ function! neoinclude#util#async_system(command) abort "{{{
     return job_start(command)
   elseif has('nvim')
     return jobstart(command)
-  elseif neoinclude#util#has_vimproc()
-    return vimproc#system_bg(command)
   else
     return neoinclude#util#system(a:command)
   endif
 endfunction"}}}
 
-function! neoinclude#util#has_vimproc() abort "{{{
-  " Initialize.
-  if !exists('s:exists_vimproc')
-    " Check vimproc.
-    try
-      call vimproc#version()
-      let s:exists_vimproc = 1
-    catch
-      let s:exists_vimproc = 0
-    endtry
-  endif
-
-  return s:exists_vimproc
-endfunction"}}}
 function! s:iconv(expr, from, to) abort "{{{
   if a:from == '' || a:to == '' || a:from ==? a:to
     return a:expr
