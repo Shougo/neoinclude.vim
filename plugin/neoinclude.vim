@@ -7,10 +7,9 @@ if exists('g:loaded_neoinclude')
   finish
 endif
 
-" Add commands. "{{{
+" Add commands.
 command! -complete=buffer -nargs=? NeoIncludeMakeCache
       \ call neoinclude#include#make_cache(<q-args>)
-"}}}
 
 let g:loaded_neoinclude = 1
 
@@ -22,5 +21,3 @@ autocmd User CmSetup call cm#register_source({
       \ 'cm_refresh': 'cm#sources#neoinclude#refresh',
       \ 'cm_refresh_min_word_len': 0,
       \ })
-
-" vim: foldmethod=marker

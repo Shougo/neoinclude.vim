@@ -4,7 +4,7 @@
 " License: MIT license
 "=============================================================================
 
-function! neoinclude#file_include#get_complete_position(input) abort "{{{
+function! neoinclude#file_include#get_complete_position(input) abort
   call neoinclude#initialize()
 
   let filetype = neoinclude#util#get_context_filetype()
@@ -42,9 +42,9 @@ function! neoinclude#file_include#get_complete_position(input) abort "{{{
   endif
 
   return complete_pos
-endfunction"}}}
+endfunction
 
-function! neoinclude#file_include#get_include_files(input) abort "{{{
+function! neoinclude#file_include#get_include_files(input) abort
   call neoinclude#initialize()
 
   let filetype = neoinclude#util#get_context_filetype()
@@ -124,9 +124,9 @@ function! neoinclude#file_include#get_include_files(input) abort "{{{
   endfor
 
   return candidates
-endfunction"}}}
+endfunction
 
-function! s:get_default_include_files(filetype) abort "{{{
+function! s:get_default_include_files(filetype) abort
   let files = []
 
   if a:filetype ==# 'python' || a:filetype ==# 'python3'
@@ -138,6 +138,4 @@ function! s:get_default_include_files(filetype) abort "{{{
         \ 'action__is_directory' : isdirectory(v:val),
         \ 'kind' : (isdirectory(v:val) ? 'dir' : 'file'),
         \}")
-endfunction"}}}
-
-" vim: foldmethod=marker
+endfunction

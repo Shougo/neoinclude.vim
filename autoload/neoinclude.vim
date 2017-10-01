@@ -6,7 +6,7 @@
 
 let s:initialized = 0
 
-function! neoinclude#initialize() abort "{{{
+function! neoinclude#initialize() abort
   if s:initialized
     return
   endif
@@ -44,7 +44,7 @@ function! neoinclude#initialize() abort "{{{
         \ get(g:, 'neoinclude#suffixes', {})
   let g:neoinclude#_suffixes = {}
 
-  " Initialize include pattern. "{{{
+  " Initialize include pattern.
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_patterns',
         \ 'java,haskell', '^\s*\<import')
@@ -63,21 +63,21 @@ function! neoinclude#initialize() abort "{{{
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_patterns',
         \ 'html,xhtml,xml,markdown,mkd', '\%(src\|href\)="\ze[^"]*$')
-  "}}}
-  " Initialize include suffixes. "{{{
+  
+  " Initialize include suffixes.
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_suffixes',
         \ 'haskell', '.hs')
-  "}}}
-  " Initialize include functions. "{{{
+  
+  " Initialize include functions.
   " call neoinclude#util#set_default_dictionary(
   "       \ 'g:neoinclude#_functions', 'vim',
   "       \ 'neoinclude#analyze_vim_include_files')
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_functions', 'ruby',
         \ 'neoinclude#analyze_ruby_include_files')
-  "}}}
-  " Initialize filename include expr. "{{{
+  
+  " Initialize filename include expr.
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_reverse_exprs',
         \ 'perl',
@@ -95,8 +95,8 @@ function! neoinclude#initialize() abort "{{{
         \ 'python',
         \ "substitute(substitute(v:fname,
         \ '\\v.*egg%(-info|-link)?$', '', ''), '/', '.', 'g')")
-  "}}}
-  " Initialize filename include extensions. "{{{
+  
+  " Initialize filename include extensions.
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_exts',
         \ 'c', ['h'])
@@ -115,25 +115,25 @@ function! neoinclude#initialize() abort "{{{
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_exts',
         \ 'python', ['py', 'py3'])
-  "}}}
-  " Initialize filename include delimiter. "{{{
+  
+  " Initialize filename include delimiter.
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_delimiters',
         \ 'c,cpp,ruby', '/')
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_delimiters',
         \ 'html,xhtml,xml,markdown,mkd', '')
-  "}}}
+  
 
-  " Initialize ctags command. "{{{
+  " Initialize ctags command.
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_ctags_commands',
         \ '_', 'ctags')
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_ctags_commands',
         \ 'go', 'gotags')
-  "}}}
-  " Initialize ctags arguments. "{{{
+  
+  " Initialize ctags arguments.
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_ctags_arguments',
         \ '_', '')
@@ -163,7 +163,7 @@ function! neoinclude#initialize() abort "{{{
         \ '--language-force=C++ -R --sort=1 --c++-kinds=+p --fields=+iaS --extra=+q '.
         \ '-I __wur,__THROW,__attribute_malloc__,__nonnull+,'.
         \   '__attribute_pure__,__attribute_warn_unused_result__,__attribute__+')
-  "}}}
+  
 
   augroup neoinclude
     autocmd!
@@ -172,9 +172,9 @@ function! neoinclude#initialize() abort "{{{
   call neoinclude#include#initialize()
 
   let s:initialized = 1
-endfunction"}}}
+endfunction
 
-function! neoinclude#set_filetype_paths(bufnr, filetype) abort "{{{
+function! neoinclude#set_filetype_paths(bufnr, filetype) abort
   if a:filetype ==# 'python' || a:filetype ==# 'python3'
     " Initialize python path pattern.
     if executable('python3')
@@ -188,9 +188,9 @@ function! neoinclude#set_filetype_paths(bufnr, filetype) abort "{{{
         \ && isdirectory('/usr/include/c++')
     call s:set_cpp_paths(a:bufnr)
   endif
-endfunction"}}}
+endfunction
 
-function! neoinclude#get_path(bufnr, filetype) abort "{{{
+function! neoinclude#get_path(bufnr, filetype) abort
   " Don't use global path if it is not C or C++
   let default = (a:filetype ==# 'c' || a:filetype ==# 'cpp'
         \ || getbufvar(a:bufnr, '&path') !=# &g:path) ?
@@ -200,52 +200,52 @@ function! neoinclude#get_path(bufnr, filetype) abort "{{{
         \   a:filetype, 'b:neoinclude_paths',
         \   g:neoinclude#paths, g:neoinclude#_paths,
         \   default))
-endfunction"}}}
-function! neoinclude#get_pattern(bufnr, filetype) abort "{{{
+endfunction
+function! neoinclude#get_pattern(bufnr, filetype) abort
   return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_patterns',
         \   g:neoinclude#patterns, g:neoinclude#_patterns,
         \   getbufvar(a:bufnr, '&include'))
-endfunction"}}}
-function! neoinclude#get_expr(bufnr, filetype) abort "{{{
+endfunction
+function! neoinclude#get_expr(bufnr, filetype) abort
   return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_exprs',
         \   g:neoinclude#exprs, g:neoinclude#_exprs,
         \   getbufvar(a:bufnr, '&includeexpr'))
-endfunction"}}}
-function! neoinclude#get_reverse_expr(filetype) abort "{{{
+endfunction
+function! neoinclude#get_reverse_expr(filetype) abort
   return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_reverse_exprs',
         \   g:neoinclude#reverse_exprs, g:neoinclude#_reverse_exprs,
         \   '')
-endfunction"}}}
-function! neoinclude#get_exts(filetype) abort "{{{
+endfunction
+function! neoinclude#get_exts(filetype) abort
   return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_exts',
         \   g:neoinclude#exts, g:neoinclude#_exts,
         \   [])
-endfunction"}}}
-function! neoinclude#get_function(filetype) abort "{{{
+endfunction
+function! neoinclude#get_function(filetype) abort
   return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_functions',
         \   g:neoinclude#functions, g:neoinclude#_functions,
         \   '')
-endfunction"}}}
-function! neoinclude#get_delimiters(filetype) abort "{{{
+endfunction
+function! neoinclude#get_delimiters(filetype) abort
   return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_delimiters',
         \   g:neoinclude#delimiters, g:neoinclude#_delimiters,
         \   '.')
-endfunction"}}}
-function! neoinclude#get_suffixes(bufnr, filetype) abort "{{{
+endfunction
+function! neoinclude#get_suffixes(bufnr, filetype) abort
   return neoinclude#util#get_buffer_config(
         \   a:filetype, 'b:neoinclude_suffixes',
         \   g:neoinclude#suffixes, g:neoinclude#_suffixes,
         \   getbufvar(a:bufnr, '&suffixesadd'))
-endfunction"}}}
+endfunction
 
 " Analyze include files functions.
-function! neoinclude#analyze_vim_include_files(lines, path) abort "{{{
+function! neoinclude#analyze_vim_include_files(lines, path) abort
   let include_files = []
   let dup_check = {}
   for line in a:lines
@@ -265,8 +265,8 @@ function! neoinclude#analyze_vim_include_files(lines, path) abort "{{{
   endfor
 
   return include_files
-endfunction"}}}
-function! neoinclude#analyze_ruby_include_files(lines, path) abort "{{{
+endfunction
+function! neoinclude#analyze_ruby_include_files(lines, path) abort
   let include_files = []
   let dup_check = {}
   for line in a:lines
@@ -290,9 +290,9 @@ function! neoinclude#analyze_ruby_include_files(lines, path) abort "{{{
   endfor
 
   return include_files
-endfunction"}}}
+endfunction
 
-function! s:set_python_paths(python_bin) abort "{{{
+function! s:set_python_paths(python_bin) abort
   let python_sys_path_cmd = a:python_bin .
         \ ' -c "import sys;sys.stdout.write(\",\".join(sys.path))"'
   let path = neoinclude#util#system(python_sys_path_cmd)
@@ -300,9 +300,9 @@ function! s:set_python_paths(python_bin) abort "{{{
         \ split(path, ',', 1), "v:val != ''")), ',')
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#paths', a:python_bin, path)
-endfunction"}}}
+endfunction
 
-function! s:set_cpp_paths(bufnr) abort "{{{
+function! s:set_cpp_paths(bufnr) abort
   let files = split(glob('/usr/include/*'), '\n')
         \ + split(glob('/usr/include/c++/*'), '\n')
         \ + split(glob('/usr/include/*/c++/*'), '\n')
@@ -313,6 +313,4 @@ function! s:set_cpp_paths(bufnr) abort "{{{
         \ 'g:neoinclude#paths', 'cpp',
         \ getbufvar(a:bufnr, '&path') .
         \ ','.join(files, ','))
-endfunction"}}}
-
-" vim: foldmethod=marker
+endfunction

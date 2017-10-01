@@ -23,7 +23,7 @@ function! neoinclude#util#is_mac() abort
   return s:is_mac
 endfunction
 
-function! neoinclude#util#uniq(list) abort "{{{
+function! neoinclude#util#uniq(list) abort
   let dict = {}
   for item in a:list
     if !has_key(dict, item)
@@ -32,9 +32,9 @@ function! neoinclude#util#uniq(list) abort "{{{
   endfor
 
   return values(dict)
-endfunction"}}}
+endfunction
 
-function! neoinclude#util#glob(pattern, ...) abort "{{{
+function! neoinclude#util#glob(pattern, ...) abort
   if a:pattern =~ "'"
     " Use glob('*').
     let cwd = getcwd()
@@ -61,30 +61,30 @@ function! neoinclude#util#glob(pattern, ...) abort "{{{
   endif
 
   return split(neoinclude#util#substitute_path_separator(glob(glob)), '\n')
-endfunction"}}}
+endfunction
 
-function! neoinclude#util#substitute_path_separator(path) abort "{{{
+function! neoinclude#util#substitute_path_separator(path) abort
   return s:is_windows ? substitute(a:path, '\\', '/', 'g') : a:path
-endfunction"}}}
+endfunction
 
-function! neoinclude#util#set_default_dictionary(variable, keys, value) abort "{{{
+function! neoinclude#util#set_default_dictionary(variable, keys, value) abort
   call neoinclude#util#set_dictionary_helper({a:variable}, a:keys, a:value)
-endfunction"}}}
-function! neoinclude#util#set_dictionary_helper(variable, keys, pattern) abort "{{{
+endfunction
+function! neoinclude#util#set_dictionary_helper(variable, keys, pattern) abort
   for key in split(a:keys, '\s*,\s*')
     if !has_key(a:variable, key)
       let a:variable[key] = a:pattern
     endif
   endfor
-endfunction"}}}
+endfunction
 
-function! neoinclude#util#system(command) abort "{{{
+function! neoinclude#util#system(command) abort
   let command = s:iconv(a:command, &encoding, 'char')
   let output = s:iconv(system(command), 'char', &encoding)
 
   return substitute(output, '\n$', '', '')
-endfunction"}}}
-function! neoinclude#util#async_system(command) abort "{{{
+endfunction
+function! neoinclude#util#async_system(command) abort
   let command = s:iconv(a:command, &encoding, 'char')
 
   if has('job')
@@ -94,17 +94,17 @@ function! neoinclude#util#async_system(command) abort "{{{
   else
     return neoinclude#util#system(a:command)
   endif
-endfunction"}}}
+endfunction
 
-function! s:iconv(expr, from, to) abort "{{{
+function! s:iconv(expr, from, to) abort
   if a:from == '' || a:to == '' || a:from ==? a:to
     return a:expr
   endif
   let result = iconv(a:expr, a:from, a:to)
   return result != '' ? result : a:expr
-endfunction"}}}
+endfunction
 
-function! neoinclude#util#get_context_filetype() abort "{{{
+function! neoinclude#util#get_context_filetype() abort
   " context_filetype.vim installation check.
   if !exists('s:exists_context_filetype')
     try
@@ -117,10 +117,10 @@ function! neoinclude#util#get_context_filetype() abort "{{{
 
   return s:exists_context_filetype ?
         \ context_filetype#get_filetype() : &filetype
-endfunction"}}}
+endfunction
 
 function! neoinclude#util#get_buffer_config(
-      \ filetype, buffer_var, user_var, default_var, ...) "{{{
+      \ filetype, buffer_var, user_var, default_var, ...)
   let default_val = get(a:000, 0, '')
 
   if exists(a:buffer_var)
@@ -132,14 +132,12 @@ function! neoinclude#util#get_buffer_config(
 
   return get(a:user_var, filetype,
         \   get(a:default_var, filetype, default_val))
-endfunction"}}}
+endfunction
 
-function! neoinclude#util#head_match(checkstr, headstr) abort "{{{
+function! neoinclude#util#head_match(checkstr, headstr) abort
   let checkstr = &ignorecase ?
         \ tolower(a:checkstr) : a:checkstr
   let headstr = &ignorecase ?
         \ tolower(a:headstr) : a:headstr
   return stridx(checkstr, headstr) == 0
-endfunction"}}}
-
-" vim: foldmethod=marker
+endfunction

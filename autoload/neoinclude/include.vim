@@ -4,7 +4,7 @@
 " License: MIT license
 "=============================================================================
 
-function! neoinclude#include#initialize() abort "{{{
+function! neoinclude#include#initialize() abort
   let s:include_info = {}
   let s:include_cache = {}
   let s:async_include_cache = {}
@@ -13,9 +13,9 @@ function! neoinclude#include#initialize() abort "{{{
   augroup neoinclude
     autocmd BufWritePost * call s:check_buffer('', 0)
   augroup END
-endfunction"}}}
+endfunction
 
-function! neoinclude#include#get_include_files(...) abort "{{{
+function! neoinclude#include#get_include_files(...) abort
   call neoinclude#initialize()
 
   call s:check_buffer('', 0)
@@ -26,9 +26,9 @@ function! neoinclude#include#get_include_files(...) abort "{{{
   else
     return s:get_buffer_include_files(bufnr)
   endif
-endfunction"}}}
+endfunction
 
-function! neoinclude#include#get_tag_files(...) abort "{{{
+function! neoinclude#include#get_tag_files(...) abort
   call neoinclude#initialize()
 
   call s:check_buffer('', 0)
@@ -38,16 +38,16 @@ function! neoinclude#include#get_tag_files(...) abort "{{{
   return filter(map(filter(map(include_files,
         \ 'get(s:async_include_cache, v:val, {})'),
         \ '!empty(v:val)'), 'v:val.cachename'), 'filereadable(v:val)')
-endfunction"}}}
+endfunction
 
 " For Debug.
-function! neoinclude#include#get_current_include_files() abort "{{{
+function! neoinclude#include#get_current_include_files() abort
   call neoinclude#initialize()
 
   return s:get_buffer_include_files(bufnr('%'))
-endfunction"}}}
+endfunction
 
-function! s:check_buffer(bufnr, is_force) abort "{{{
+function! s:check_buffer(bufnr, is_force) abort
   let bufnr = (a:bufnr == '') ? bufnr('%') : a:bufnr
   let filename = fnamemodify(bufname(bufnr), ':p')
 
@@ -111,9 +111,9 @@ function! s:check_buffer(bufnr, is_force) abort "{{{
       let include_info.async_files[filename] = 1
     endif
   endfor
-endfunction"}}}
+endfunction
 
-function! s:get_buffer_include_files(bufnr) abort "{{{
+function! s:get_buffer_include_files(bufnr) abort
   let filetype = getbufvar(a:bufnr, '&filetype')
   if filetype == ''
     return []
@@ -147,10 +147,10 @@ function! s:get_buffer_include_files(bufnr) abort "{{{
   let &l:suffixesadd = suffixes
 
   return neoinclude#util#uniq(include_files)
-endfunction"}}}
-function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) abort "{{{
+endfunction
+function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) abort
   let include_files = []
-  for line in a:lines "{{{
+  for line in a:lines
     if line =~ a:pattern
       let match_end = matchend(line, a:pattern)
       if a:expr != ''
@@ -183,12 +183,12 @@ function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) a
               \ neoinclude#util#glob(filename . '/*.java')
       endif
     endif
-  endfor"}}}
+  endfor
 
   return include_files
-endfunction"}}}
+endfunction
 
-function! s:initialize_include(filename, filetype, ctags, is_force) abort "{{{
+function! s:initialize_include(filename, filetype, ctags, is_force) abort
   " Initialize include list from tags.
   let tags_file_name = tempname()
   let args = neoinclude#util#get_buffer_config(a:filetype,
@@ -218,8 +218,8 @@ function! s:initialize_include(filename, filetype, ctags, is_force) abort "{{{
         \ 'filename' : a:filename,
         \ 'cachename' : tags_file_name,
         \ }
-endfunction"}}}
-function! neoinclude#include#make_cache(bufname) abort "{{{
+endfunction
+function! neoinclude#include#make_cache(bufname) abort
   call neoinclude#initialize()
 
   let bufnr = (a:bufname == '') ? bufnr('%') : bufnr(a:bufname)
@@ -230,6 +230,4 @@ function! neoinclude#include#make_cache(bufname) abort "{{{
   endif
 
   call s:check_buffer(bufnr, 1)
-endfunction"}}}
-
-" vim: foldmethod=marker
+endfunction

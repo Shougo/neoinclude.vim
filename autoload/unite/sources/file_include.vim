@@ -14,13 +14,13 @@ let s:source = {
       \ 'description' : 'candidates from include files',
       \ 'hooks' : {},
       \}
-function! s:source.hooks.on_init(args, context) abort "{{{
+function! s:source.hooks.on_init(args, context) abort
   let a:context.source__include_files =
         \ neoinclude#include#get_include_files(bufnr('%'))
   let a:context.source__path = &path
-endfunction"}}}
+endfunction
 
-function! s:source.gather_candidates(args, context) abort "{{{
+function! s:source.gather_candidates(args, context) abort
   let files = map(copy(a:context.source__include_files), '{
         \ "word" : neoinclude#util#substitute_path_separator(v:val),
         \ "abbr" : neoinclude#util#substitute_path_separator(v:val),
@@ -41,6 +41,4 @@ function! s:source.gather_candidates(args, context) abort "{{{
   endfor
 
   return files
-endfunction"}}}
-
-" vim: foldmethod=marker
+endfunction

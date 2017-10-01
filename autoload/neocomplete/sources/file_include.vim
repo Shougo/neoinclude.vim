@@ -14,16 +14,14 @@ let s:source = {
       \ 'min_pattern_length' : 0,
       \}
 
-function! neocomplete#sources#file_include#define() abort "{{{
+function! neocomplete#sources#file_include#define() abort
   return s:source
-endfunction"}}}
+endfunction
 
-function! s:source.get_complete_position(context) abort "{{{
+function! s:source.get_complete_position(context) abort
   return neoinclude#file_include#get_complete_position(a:context.input)
-endfunction"}}}
+endfunction
 
-function! s:source.gather_candidates(context) abort "{{{
+function! s:source.gather_candidates(context) abort
   return neoinclude#file_include#get_include_files(a:context.input)
-endfunction"}}}
-
-" vim: foldmethod=marker
+endfunction
