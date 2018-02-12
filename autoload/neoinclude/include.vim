@@ -173,7 +173,7 @@ function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) a
         if a:nestlevel < 1
           " Nested include files.
           let include_files += s:get_include_files(
-                \ a:nestlevel + 1, readfile(filename)[:100],
+                \ a:nestlevel + 1, readfile(filename, '', 100),
                 \ a:filetype, a:pattern, a:path, a:expr)
         endif
       elseif isdirectory(filename) && a:filetype ==# 'java'
