@@ -37,15 +37,18 @@ endfunction
 function! neoinclude#util#glob(pattern, ...) abort
   if a:pattern =~ "'"
     " Use glob('*').
-    let cwd = getcwd()
     let base = neoinclude#util#substitute_path_separator(
           \ fnamemodify(a:pattern, ':h'))
-    execute 'lcd' fnameescape(base)
+    let cwd_save = neoinclude#util#cd(base)
 
-    let files = map(split(neoinclude#util#substitute_path_separator(
-          \ glob('*')), '\n'), "base . '/' . v:val")
-
-    execute 'lcd' fnameescape(cwd)
+    try
+      let files = map(split(neoinclude#util#substitute_path_separator(
+            \ glob('*')), '\n'), "base . '/' . v:val")
+    finally
+      if !empty(cwd_save)
+        execute cwd_save[0] fnameescape(cwd_save[1])
+      endif
+    endtry
 
     return files
   endif
@@ -140,4 +143,16 @@ function! neoinclude#util#head_match(checkstr, headstr) abort
   let headstr = &ignorecase ?
         \ tolower(a:headstr) : a:headstr
   return stridx(checkstr, headstr) == 0
+endfunction
+
+function! neoinclude#util#cd(dir) abort
+  let cwd = getcwd()
+  if !isdirectory(a:dir) || a:dir == cwd
+    return []
+  endif
+
+  let cd_command = haslocaldir() ? 'lcd' :
+        \ (exists(':tcd') == 2 && haslocaldir(-1, 0)) ? 'tcd' : 'cd'
+  execute 'lcd' fnameescape(buffer_dir)
+  return [cd_command, cwd]
 endfunction

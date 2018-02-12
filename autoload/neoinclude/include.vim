@@ -130,21 +130,21 @@ function! s:get_buffer_include_files(bufnr) abort
   let suffixes = &l:suffixesadd
 
   " Change current directory.
-  let cwd_save = getcwd()
   let buffer_dir = fnamemodify(bufname(a:bufnr), ':p:h')
-  if isdirectory(buffer_dir)
-    execute 'lcd' fnameescape(buffer_dir)
-  endif
 
-  let include_files = s:get_include_files(0,
-        \ getbufline(a:bufnr, 1, 100), filetype, pattern, path, expr)
+  let cwd_save = neoinclude#util#cd(buffer_dir)
 
-  if isdirectory(buffer_dir)
-    execute 'lcd' fnameescape(cwd_save)
-  endif
+  try
+    let include_files = s:get_include_files(0,
+          \ getbufline(a:bufnr, 1, 100), filetype, pattern, path, expr)
+  finally
+    if !empty(cwd_save)
+      execute cwd_save[0] fnameescape(cwd_save[1])
+    endif
 
-  " Restore option.
-  let &l:suffixesadd = suffixes
+    " Restore option.
+    let &l:suffixesadd = suffixes
+  endtry
 
   return neoinclude#util#uniq(include_files)
 endfunction
