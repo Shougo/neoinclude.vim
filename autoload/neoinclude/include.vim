@@ -131,7 +131,6 @@ function! s:get_buffer_include_files(bufnr) abort
 
   " Change current directory.
   let buffer_dir = fnamemodify(bufname(a:bufnr), ':p:h')
-
   let cwd_save = neoinclude#util#cd(buffer_dir)
 
   try
