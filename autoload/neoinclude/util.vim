@@ -126,12 +126,12 @@ endfunction
 
 function! neoinclude#util#cd(dir) abort
   let cwd = getcwd()
-  if !isdirectory(a:dir) || a:dir == cwd
+  if !isdirectory(a:dir) || a:dir ==# cwd
     return []
   endif
 
   let cd_command = haslocaldir() ? 'lcd' :
         \ (exists(':tcd') == 2 && haslocaldir(-1, 0)) ? 'tcd' : 'cd'
-  execute 'lcd' fnameescape(buffer_dir)
+  execute cd_command fnameescape(a:dir)
   return [cd_command, cwd]
 endfunction
