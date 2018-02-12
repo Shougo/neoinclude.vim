@@ -34,28 +34,7 @@ function! neoinclude#util#uniq(list) abort
   return values(dict)
 endfunction
 
-function! neoinclude#util#glob(pattern, ...) abort
-  if a:pattern =~ "'"
-    " Use glob('*').
-    let base = neoinclude#util#substitute_path_separator(
-          \ fnamemodify(a:pattern, ':h'))
-    let cwd_save = neoinclude#util#cd(base)
-
-    try
-      let files = map(split(neoinclude#util#substitute_path_separator(
-            \ glob('*')), '\n'), "base . '/' . v:val")
-    finally
-      if !empty(cwd_save)
-        execute cwd_save[0] fnameescape(cwd_save[1])
-      endif
-    endtry
-
-    return files
-  endif
-
-  " let is_force_glob = get(a:000, 0, 0)
-  let is_force_glob = get(a:000, 0, 1)
-
+function! neoinclude#util#glob(pattern) abort
   " Escape [.
   if neoinclude#util#is_windows()
     let glob = substitute(a:pattern, '\[', '\\[[]', 'g')

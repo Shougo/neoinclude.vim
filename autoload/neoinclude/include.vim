@@ -179,8 +179,7 @@ function! s:get_include_files(nestlevel, lines, filetype, pattern, path, expr) a
       elseif isdirectory(filename) && a:filetype ==# 'java'
         " For Java import with *.
         " Ex: import lejos.nxt.*
-        let include_files +=
-              \ neoinclude#util#glob(filename . '/*.java')
+        let include_files += neoinclude#util#glob(filename . '/*.java')
       endif
     endif
   endfor
