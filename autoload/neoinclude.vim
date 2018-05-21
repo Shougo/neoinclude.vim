@@ -63,12 +63,12 @@ function! neoinclude#initialize() abort
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_patterns',
         \ 'html,xhtml,xml,markdown,mkd', '\%(src\|href\)="\ze[^"]*$')
-  
+
   " Initialize include suffixes.
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_suffixes',
         \ 'haskell', '.hs')
-  
+
   " Initialize include functions.
   " call neoinclude#util#set_default_dictionary(
   "       \ 'g:neoinclude#_functions', 'vim',
@@ -76,7 +76,7 @@ function! neoinclude#initialize() abort
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_functions', 'ruby',
         \ 'neoinclude#analyze_ruby_include_files')
-  
+
   " Initialize filename include expr.
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_reverse_exprs',
@@ -95,7 +95,7 @@ function! neoinclude#initialize() abort
         \ 'python',
         \ "substitute(substitute(v:fname,
         \ '\\v.*egg%(-info|-link)?$', '', ''), '/', '.', 'g')")
-  
+
   " Initialize filename include extensions.
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_exts',
@@ -115,7 +115,7 @@ function! neoinclude#initialize() abort
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_exts',
         \ 'python', ['py', 'py3'])
-  
+
   " Initialize filename include delimiter.
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_delimiters',
@@ -123,7 +123,6 @@ function! neoinclude#initialize() abort
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_delimiters',
         \ 'html,xhtml,xml,markdown,mkd', '')
-  
 
   " Initialize ctags command.
   call neoinclude#util#set_default_dictionary(
@@ -132,7 +131,7 @@ function! neoinclude#initialize() abort
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_ctags_commands',
         \ 'go', 'gotags')
-  
+
   " Initialize ctags arguments.
   call neoinclude#util#set_default_dictionary(
         \ 'g:neoinclude#_ctags_arguments',
@@ -163,7 +162,6 @@ function! neoinclude#initialize() abort
         \ '--language-force=C++ -R --sort=1 --c++-kinds=+p --fields=+iaS --extra=+q '.
         \ '-I __wur,__THROW,__attribute_malloc__,__nonnull+,'.
         \   '__attribute_pure__,__attribute_warn_unused_result__,__attribute__+')
-  
 
   augroup neoinclude
     autocmd!
