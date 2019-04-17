@@ -173,12 +173,11 @@ function! neoinclude#initialize() abort
 endfunction
 
 function! neoinclude#set_filetype_paths(bufnr, filetype) abort
-  if a:filetype ==# 'python' || a:filetype ==# 'python3'
+  if a:filetype ==# 'python' && !has_key(g:neoinclude#paths, 'python')
     " Initialize python path pattern.
     if executable('python3')
       call s:set_python_paths('python3')
-    endif
-    if executable('python')
+    elseif executable('python')
       call s:set_python_paths('python')
     endif
   elseif a:filetype ==# 'cpp'
@@ -297,7 +296,7 @@ function! s:set_python_paths(python_bin) abort
   let path = join(neoinclude#util#uniq(filter(
         \ split(path, ',', 1), "v:val != ''")), ',')
   call neoinclude#util#set_default_dictionary(
-        \ 'g:neoinclude#paths', a:python_bin, path)
+        \ 'g:neoinclude#paths', 'python', path)
 endfunction
 
 function! s:set_cpp_paths(bufnr) abort
